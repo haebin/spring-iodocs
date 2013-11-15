@@ -47,7 +47,9 @@ public class IoDocsParameter {
 		data.put("Name", name);
 		data.put("Required", required?"Y":"N");
 		data.put("Type", type);
-		data.put("Default", defaultValue);
+		if(defaultValue != null) {
+			data.put("Default", defaultValue);
+		}
 		//data.put("Location", location + "");
 		data.put("Description", description);
 

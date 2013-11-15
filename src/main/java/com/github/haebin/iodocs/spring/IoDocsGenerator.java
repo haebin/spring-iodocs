@@ -144,7 +144,7 @@ public class IoDocsGenerator {
 			}
 			
 			if(Primitives.isPrimitive(typeClass) || typeClass.getSimpleName().equals("String")) {
-				String name = "PLEASE_MARK_PARAMETER_WITH_@IoDocsName";
+				String name = "PLEASE_GIVE_" + paramIndex + "_PARAMETER_NAME_WITH_@IoDocsName";
 				for(Annotation annotation: parameterAnnotations) {
 					if(annotation.annotationType().equals(IoDocsName.class)) {
 						name = ((IoDocsName)annotation).value();
@@ -152,32 +152,40 @@ public class IoDocsGenerator {
 					}
 				}
 				
-				processParam(name, typeClass.getSimpleName().toLowerCase(), typeClass, parameters);
+				Object defaultValue = null;
+				parameters.add(processParam(name, typeClass.getSimpleName().toLowerCase(), defaultValue, typeClass));
 			} else {
 				List<Field> fields = new ArrayList<Field>();
 				getAllFields(fields, typeClass);
 				
-				for(Field field: fields) {
-					processParam(field.getName(), field.getType().getSimpleName().toLowerCase(), 
-							field, parameters);
+				Object typeObject = null;
+				try {
+					typeObject = typeClass.newInstance();
+					for(Field field: fields) {
+						field.setAccessible(true);
+						Object defaultValue = field.get(typeObject);
+						parameters.add(processParam(field.getName(), field.getType().getSimpleName().toLowerCase(), 
+								defaultValue, field));
+					}
+				} catch (Exception e) {
+					throw new RuntimeException(e);
 				}
 			}	
 		}
 		return parameters;
 	}
 	
-	private boolean processParam(String name, String type, 
-			AnnotatedElement field, List<IoDocsParameter> parameters) {
+	private IoDocsParameter processParam(String name, String type, Object defaultValue,  
+			AnnotatedElement field) {
 		boolean required = false;
 		String description = "";
 		
-		Object defaultValue = null;
 		Location location = null;
 		List<String> enumeratedList = Lists.newArrayList();
 		List<String> enumeratedDescription = Lists.newArrayList();
 		
 		if(field.isAnnotationPresent(IoDocsIgnore.class)) {
-			return false;
+			return null;
 		}
 		
 		if(field.isAnnotationPresent(NotNull.class)) {
@@ -187,10 +195,9 @@ public class IoDocsGenerator {
 		if(field.isAnnotationPresent(IoDocsDescription.class)) {
 			description = field.getAnnotation(IoDocsDescription.class).value();
 		}
-		
-		parameters.add(new IoDocsParameter(name, description, location, 
-				type, required, defaultValue, enumeratedList, enumeratedDescription));
-		return true;
+
+		return new IoDocsParameter(name, description, location, 
+				type, required, defaultValue, enumeratedList, enumeratedDescription);
 	}
 	
 	class NameComparator implements Comparator<Map<String, Object>> {
