@@ -76,7 +76,7 @@ public class IoDocsGenerator {
 				continue;
 			}
 			
-			String methodName = springControllerClass.getSimpleName() + "_" + method.getName();
+			String methodName = method.getName();
 			String synopsis = null;
 			String httpMethod = "GET";
 			String uri = null;
@@ -144,7 +144,7 @@ public class IoDocsGenerator {
 			}
 			
 			if(Primitives.isPrimitive(typeClass) || typeClass.getSimpleName().equals("String")) {
-				String name = "PLEASE_GIVE_" + paramIndex + "_PARAMETER_NAME_WITH_@IoDocsName";
+				String name = "PLEASE_GIVE_PARAMETER_#" + (paramIndex+1) + "_A_NAME_WITH_@IoDocsName";
 				for(Annotation annotation: parameterAnnotations) {
 					if(annotation.annotationType().equals(IoDocsName.class)) {
 						name = ((IoDocsName)annotation).value();
