@@ -105,7 +105,7 @@ public class IoDocsGenerator {
 					synopsis = ((IoDocsDescription) annotation).value();
 				} else if (annotation.annotationType().equals(RequestMapping.class)) {
 					RequestMapping rm = (RequestMapping)annotation;
-					Object ext = props.get("extension");
+					Object ext = (props == null? null:props.get("extension"));
 					uri = pathPrefix + (rm).value()[0] + (ext == null ? "":ext.toString());
 				}
 			}

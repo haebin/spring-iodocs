@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
+import org.junit.Assert;
 import org.junit.Test;
 
 import com.github.haebin.iodocs.mock.controller.SimpleController;
@@ -18,14 +19,18 @@ public class SpringIoDocsTest {
 	public void simpleTest() {
 		Class<?>[] clazzes = new Class<?>[]{SimpleController.class};
 		String json = new IoDocsGenerator().generateIoDocs(clazzes);
+		String file = loadClasspathResourceAsString("simpleTest.json");
 		System.out.println(json);
+		Assert.assertEquals(json, file);
 	}
 
 	@Test
 	public void normalTest() {
 		Class<?>[] clazzes = new Class<?>[]{SomeController.class, ThatController.class};
 		String json = new IoDocsGenerator().generateIoDocs(clazzes);
+		String file = loadClasspathResourceAsString("normalTest.json");
 		System.out.println(json);
+		Assert.assertEquals(json, file);
 	}
 	
 	@Test
@@ -39,7 +44,7 @@ public class SpringIoDocsTest {
 		
 	public static String loadClasspathResourceAsString(String filename) {
 		try {
-			return IOUtils.toString(ClassLoader.getSystemResourceAsStream(filename), "UTF-8");
+			return IOUtils.toString(ClassLoader.getSystemResourceAsStream(filename), "UTF-8").replaceAll("\r", "");
 		}
 		catch (Exception e) {
 			fail("Could not load resource from classpath '" + filename + "': " + e.getMessage());

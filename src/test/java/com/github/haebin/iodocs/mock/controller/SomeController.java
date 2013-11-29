@@ -22,8 +22,7 @@ public class SomeController {
 	@ResponseBody
 	@RequestMapping("/user/create")
 	@IoDocsName("1 haha!")
-	@IoDocsDescription("이 API는 어쩌고 저쩌고" + 
-			"어쩌고 저쪼고<br> 이오! ")
+	@IoDocsDescription("This is blah blah blah API!")
 	public Map<String, Object> createUser(@Valid @RequestBody UserParameter param,
 			BindingResult bindResult, HttpServletRequest request) throws Exception {
 		Map<String, Object> response = new HashMap<String, Object>();
@@ -31,8 +30,7 @@ public class SomeController {
 	}
 	
 	@IoDocsName("2 aaa!")
-	@IoDocsDescription("이 API는 어쩌고 저쩌고" + 
-			"어쩌고 저쪼고<br> 이오! ")
+	@IoDocsDescription("Awesome API~")
 	@ResponseBody
 	@RequestMapping("/user/test")
 	public Map<String, Object> testUser(@Valid UserParameter param, @IoDocsName("test") String test,
@@ -41,8 +39,7 @@ public class SomeController {
 		return response;
 	}
 	
-	@IoDocsDescription("이 API는 어쩌고 저쩌고" + 
-			"어쩌고 저쪼고<br> 이오! ")
+	@IoDocsDescription("Super super API!")
 	@ResponseBody
 	@RequestMapping("/user/hoho")
 	public Map<String, Object> hohoUser(@Valid UserParameter param,

@@ -6,7 +6,7 @@ import com.github.haebin.iodocs.annotation.IoDocsDescription;
 
 public class Param {
 	@NotNull
-	@IoDocsDescription(" 파라미터 key 지롱~ ")
+	@IoDocsDescription("This key is for blah blah.")
 	private long key = -1;
 
 	public long getKey() {
