@@ -1,0 +1,43 @@
+{
+  "endpoints": [
+    {
+      "name": "SimpleController",
+      "methods": [
+        {
+          "MethodName": "createUser",
+          "HTTPMethod": "GET",
+          "URI": "api/v1/user/create",
+          "parameters": [
+            {
+              "Name": "key",
+              "Required": "Y",
+              "Type": "long",
+              "Default": -1,
+              "Description": "This key is for blah blah."
+            },
+            {
+              "Name": "name",
+              "Required": "Y",
+              "Type": "string",
+              "Default": "",
+              "Description": ""
+            },
+            {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            },
+            {
+              "Name": "PLEASE_GIVE_PARAMETER_#2_A_NAME_WITH_@IoDocsName",
+              "Required": "N",
+              "Type": "string",
+              "Description": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

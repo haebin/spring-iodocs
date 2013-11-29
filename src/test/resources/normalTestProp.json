@@ -1,0 +1,194 @@
+{
+  "endpoints": [
+    {
+      "name": "1 허허허 API",
+      "methods": [
+        {
+          "MethodName": "1 haha!",
+          "HTTPMethod": "GET",
+          "URI": "api/v1/user/create.json",
+          "Synopsis": "LoL nice!",
+          "parameters": [
+            {
+              "Name": "key",
+              "Required": "Y",
+              "Type": "long",
+              "Default": -1,
+              "Description": "This key is for blah blah."
+            },
+            {
+              "Name": "name",
+              "Required": "Y",
+              "Type": "string",
+              "Default": "",
+              "Description": ""
+            },
+            {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "MethodName": "2 aaa!",
+          "HTTPMethod": "GET",
+          "URI": "api/v1/user/test.json",
+          "Synopsis": "Very good good!",
+          "parameters": [
+            {
+              "Name": "key",
+              "Required": "Y",
+              "Type": "long",
+              "Default": -1,
+              "Description": "This key is for blah blah."
+            },
+            {
+              "Name": "name",
+              "Required": "Y",
+              "Type": "string",
+              "Default": "",
+              "Description": ""
+            },
+            {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "MethodName": "hohoUser",
+          "HTTPMethod": "GET",
+          "URI": "api/v1/user/hoho.json",
+          "Synopsis": "Really fun test",
+          "parameters": [
+            {
+              "Name": "key",
+              "Required": "Y",
+              "Type": "long",
+              "Default": -1,
+              "Description": "This key is for blah blah."
+            },
+            {
+              "Name": "name",
+              "Required": "Y",
+              "Type": "string",
+              "Default": "",
+              "Description": ""
+            },
+            {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "SomeController",
+      "methods": [
+        {
+          "MethodName": "1 haha!",
+          "HTTPMethod": "POST",
+          "URI": "api/v1/user/create.json",
+          "Synopsis": "This is blah blah blah API!",
+          "parameters": [
+            {
+              "Name": "key",
+              "Required": "Y",
+              "Type": "long",
+              "Default": -1,
+              "Description": "This key is for blah blah."
+            },
+            {
+              "Name": "name",
+              "Required": "Y",
+              "Type": "string",
+              "Default": "",
+              "Description": ""
+            },
+            {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "MethodName": "2 aaa!",
+          "HTTPMethod": "GET",
+          "URI": "api/v1/user/test.json",
+          "Synopsis": "Awesome API~",
+          "parameters": [
+            {
+              "Name": "key",
+              "Required": "Y",
+              "Type": "long",
+              "Default": -1,
+              "Description": "This key is for blah blah."
+            },
+            {
+              "Name": "name",
+              "Required": "Y",
+              "Type": "string",
+              "Default": "",
+              "Description": ""
+            },
+            {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            },
+            {
+              "Name": "test",
+              "Required": "N",
+              "Type": "string",
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "MethodName": "hohoUser",
+          "HTTPMethod": "GET",
+          "URI": "api/v1/user/hoho.json",
+          "Synopsis": "Super super API!",
+          "parameters": [
+            {
+              "Name": "key",
+              "Required": "Y",
+              "Type": "long",
+              "Default": -1,
+              "Description": "This key is for blah blah."
+            },
+            {
+              "Name": "name",
+              "Required": "Y",
+              "Type": "string",
+              "Default": "",
+              "Description": ""
+            },
+            {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
