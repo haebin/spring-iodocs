@@ -32,6 +32,10 @@ import com.google.gson.internal.Primitives;
 
 public class IoDocsGenerator {
 	public String generateIoDocs(Class<?>[] endpoints) {
+		return generateIoDocs(endpoints, null);
+	}
+	
+	public String generateIoDocs(Class<?>[] endpoints, Map<String, Object> props) {
 		LinkedHashMap<String, Object> json = Maps.newLinkedHashMap();
 		List<LinkedHashMap<String, Object>> endpointsJson = Lists.newArrayList();
 		json.put("endpoints", endpointsJson);
@@ -54,7 +58,7 @@ public class IoDocsGenerator {
 							: endpointName.value());
 			
 			List<LinkedHashMap<String, Object>> methods = Lists.newArrayList();
-			for (IoDocsMethod method : getIoDocsMethods(pathPrefix, endpoint)) {
+			for (IoDocsMethod method : getIoDocsMethods(pathPrefix, endpoint, props)) {
 				methods.add(method.getData());
 			}
 			Collections.sort(endpointsJson, new NameComparator("MethodName"));
@@ -67,7 +71,7 @@ public class IoDocsGenerator {
 		return gson.toJson(json);
 	}
 	
-	private <T> List<IoDocsMethod> getIoDocsMethods(String pathPrefix, Class<T> springControllerClass) {
+	private <T> List<IoDocsMethod> getIoDocsMethods(String pathPrefix, Class<T> springControllerClass, Map<String, Object> props) {
 		List<IoDocsMethod> methods = Lists.newArrayList();
 		
 		for (Method method : springControllerClass.getMethods()) {
@@ -101,7 +105,8 @@ public class IoDocsGenerator {
 					synopsis = ((IoDocsDescription) annotation).value();
 				} else if (annotation.annotationType().equals(RequestMapping.class)) {
 					RequestMapping rm = (RequestMapping)annotation;
-					uri = pathPrefix + (rm).value()[0];
+					Object ext = props.get("extension");
+					uri = pathPrefix + (rm).value()[0] + (ext == null ? "":ext.toString());
 				}
 			}
 			

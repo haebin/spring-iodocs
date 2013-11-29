@@ -2,6 +2,9 @@ package com.github.haebin.iodocs.spring;
 
 import static org.junit.Assert.fail;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 
@@ -22,6 +25,15 @@ public class SpringIoDocsTest {
 	public void normalTest() {
 		Class<?>[] clazzes = new Class<?>[]{SomeController.class, ThatController.class};
 		String json = new IoDocsGenerator().generateIoDocs(clazzes);
+		System.out.println(json);
+	}
+	
+	@Test
+	public void normalTestProp() {
+		Map<String, Object> props = new HashMap<String, Object>();
+		props.put("extension", ".json");
+		Class<?>[] clazzes = new Class<?>[]{SomeController.class, ThatController.class};
+		String json = new IoDocsGenerator().generateIoDocs(clazzes, props);
 		System.out.println(json);
 	}
 		
