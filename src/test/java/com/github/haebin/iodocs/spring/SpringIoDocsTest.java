@@ -20,9 +20,9 @@ public class SpringIoDocsTest {
 	public void booleanTest() {
 		Class<?>[] clazzes = new Class<?>[]{ParamWithBooleanController.class};
 		String json = new IoDocsGenerator().generateIoDocs(clazzes);
-		//String file = loadClasspathResourceAsString("simpleTest.json");
+		String file = loadClasspathResourceAsString("paramWithBooleanTest.json");
 		System.out.println(json);
-		//Assert.assertEquals(json, file);
+		Assert.assertEquals(json, file);
 	}
 	
 	@Test
@@ -54,7 +54,7 @@ public class SpringIoDocsTest {
 		
 	public static String loadClasspathResourceAsString(String filename) {
 		try {
-			return IOUtils.toString(ClassLoader.getSystemResourceAsStream(filename), "UTF-8").replaceAll("\r", "");
+			return IOUtils.toString(ClassLoader.getSystemResourceAsStream(filename), "UTF-8").replaceAll("\r", "").trim();
 		}
 		catch (Exception e) {
 			fail("Could not load resource from classpath '" + filename + "': " + e.getMessage());

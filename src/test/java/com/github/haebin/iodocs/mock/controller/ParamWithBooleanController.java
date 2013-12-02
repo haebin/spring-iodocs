@@ -11,14 +11,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.github.haebin.iodocs.mock.model.Param;
+import com.github.haebin.iodocs.mock.model.BooleanParam;
 
 @Controller
 @RequestMapping("api/v1")
 public class ParamWithBooleanController {
 	@ResponseBody
 	@RequestMapping("/user/create")
-	public Map<String, Object> createUser(@Valid Param param,
+	public Map<String, Object> createUser(@Valid BooleanParam param,
 			BindingResult bindResult, HttpServletRequest request) throws Exception {
 		Map<String, Object> response = new HashMap<String, Object>();
 		return response;

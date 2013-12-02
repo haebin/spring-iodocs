@@ -1,0 +1,24 @@
+{
+  "endpoints": [
+    {
+      "name": "ParamWithBooleanController",
+      "methods": [
+        {
+          "MethodName": "createUser",
+          "HTTPMethod": "GET",
+          "URI": "api/v1/user/create",
+          "parameters": [
+            {
+              "Name": "nice",
+              "Required": "N",
+              "Type": "boolean",
+              "Default": "false",
+              "Description": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+
