@@ -32,13 +32,11 @@ public class IoDocsMethod {
 		method.put("HTTPMethod", httpMethod);
 		method.put("URI", uri);
 		
-		if (!StringUtils.isBlank(synopsis))
+		if (!StringUtils.isBlank(synopsis)) {
 			method.put("Synopsis", synopsis);
-
-		List<LinkedHashMap<String, Object>> parameterData = getParameterData();
-		if (!parameterData.isEmpty()) {
-			method.put("parameters", parameterData);
 		}
+		
+		method.put("parameters", getParameterData());
 		return method;
 	}
 
