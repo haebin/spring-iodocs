@@ -9,11 +9,21 @@ import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.haebin.iodocs.mock.controller.ParamWithBooleanController;
 import com.github.haebin.iodocs.mock.controller.SimpleController;
 import com.github.haebin.iodocs.mock.controller.SomeController;
 import com.github.haebin.iodocs.mock.controller.ThatController;
 
 public class SpringIoDocsTest {
+	
+	@Test
+	public void booleanTest() {
+		Class<?>[] clazzes = new Class<?>[]{ParamWithBooleanController.class};
+		String json = new IoDocsGenerator().generateIoDocs(clazzes);
+		//String file = loadClasspathResourceAsString("simpleTest.json");
+		System.out.println(json);
+		//Assert.assertEquals(json, file);
+	}
 	
 	@Test
 	public void simpleTest() {

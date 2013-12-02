@@ -169,6 +169,9 @@ public class IoDocsGenerator {
 					for(Field field: fields) {
 						field.setAccessible(true);
 						Object defaultValue = field.get(typeObject);
+						if(defaultValue instanceof Boolean) {
+							defaultValue = defaultValue.toString();
+						}
 						parameters.add(processParam(field.getName(), field.getType().getSimpleName().toLowerCase(), 
 								defaultValue, field));
 					}
