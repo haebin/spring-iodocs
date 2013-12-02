@@ -15,7 +15,7 @@ import com.github.haebin.iodocs.annotation.IoDocsDescription;
 import com.github.haebin.iodocs.annotation.IoDocsName;
 import com.github.haebin.iodocs.mock.model.UserParameter;
 
-@IoDocsName("1 허허허 API")
+@IoDocsName("1 LoL LoL API")
 @Controller
 @RequestMapping("api/v1")
 public class ThatController {
