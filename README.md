@@ -27,7 +27,7 @@ Use it with https://github.com/vkorapaty/iodocs.
 	<dependency>
 		<groupId>com.github.haebin</groupId>
 		<artifactId>spring-iodocs</artifactId>
-		<version>0.1.0-SNAPSHOT</version>
+		<version>0.1.1</version>
 	</dependency>
 	...
 </dependencies>
@@ -38,14 +38,17 @@ Use it with https://github.com/vkorapaty/iodocs.
 To generate the JSON String, do the following:
 
 ```java 
+Map<String, Object> props = new HashMap<String, Object>();
+props.put("extension", ".json");
 new IoDocsGenerator().generateIoDocs( 
 	new Class<?>[]{
 		EndpointOneController.class,
 		EndpointTwoController.class
-	}
+	},
+	props
 )
 ```
 
 # Features
 
-* ...
+* For now, only supports Spring based GET APIs only.
