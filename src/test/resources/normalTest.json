@@ -10,6 +10,13 @@
           "Synopsis": "LoL nice!",
           "parameters": [
             {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            },
+            {
               "Name": "key",
               "Required": "Y",
               "Type": "long",
@@ -21,13 +28,6 @@
               "Required": "Y",
               "Type": "string",
               "Default": "",
-              "Description": ""
-            },
-            {
-              "Name": "age",
-              "Required": "N",
-              "Type": "int",
-              "Default": 0,
               "Description": ""
             }
           ]
@@ -39,6 +39,13 @@
           "Synopsis": "Very good good!",
           "parameters": [
             {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            },
+            {
               "Name": "key",
               "Required": "Y",
               "Type": "long",
@@ -50,13 +57,6 @@
               "Required": "Y",
               "Type": "string",
               "Default": "",
-              "Description": ""
-            },
-            {
-              "Name": "age",
-              "Required": "N",
-              "Type": "int",
-              "Default": 0,
               "Description": ""
             }
           ]
@@ -68,6 +68,13 @@
           "Synopsis": "Really fun test",
           "parameters": [
             {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            },
+            {
               "Name": "key",
               "Required": "Y",
               "Type": "long",
@@ -79,13 +86,6 @@
               "Required": "Y",
               "Type": "string",
               "Default": "",
-              "Description": ""
-            },
-            {
-              "Name": "age",
-              "Required": "N",
-              "Type": "int",
-              "Default": 0,
               "Description": ""
             }
           ]
@@ -102,6 +102,13 @@
           "Synopsis": "This is blah blah blah API!",
           "parameters": [
             {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            },
+            {
               "Name": "key",
               "Required": "Y",
               "Type": "long",
@@ -113,13 +120,6 @@
               "Required": "Y",
               "Type": "string",
               "Default": "",
-              "Description": ""
-            },
-            {
-              "Name": "age",
-              "Required": "N",
-              "Type": "int",
-              "Default": 0,
               "Description": ""
             }
           ]
@@ -131,6 +131,13 @@
           "Synopsis": "Awesome API~",
           "parameters": [
             {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            },
+            {
               "Name": "key",
               "Required": "Y",
               "Type": "long",
@@ -142,13 +149,6 @@
               "Required": "Y",
               "Type": "string",
               "Default": "",
-              "Description": ""
-            },
-            {
-              "Name": "age",
-              "Required": "N",
-              "Type": "int",
-              "Default": 0,
               "Description": ""
             },
             {
@@ -166,6 +166,13 @@
           "Synopsis": "Super super API!",
           "parameters": [
             {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            },
+            {
               "Name": "key",
               "Required": "Y",
               "Type": "long",
@@ -177,13 +184,6 @@
               "Required": "Y",
               "Type": "string",
               "Default": "",
-              "Description": ""
-            },
-            {
-              "Name": "age",
-              "Required": "N",
-              "Type": "int",
-              "Default": 0,
               "Description": ""
             }
           ]

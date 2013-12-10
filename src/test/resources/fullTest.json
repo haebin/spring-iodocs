@@ -4,6 +4,47 @@
       "name": "FullController",
       "methods": [
         {
+          "MethodName": "create",
+          "HTTPMethod": "POST",
+          "URI": "/api/v1/internal/types",
+          "parameters": [
+            {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            },
+            {
+              "Name": "key",
+              "Required": "Y",
+              "Type": "long",
+              "Default": -1,
+              "Description": "This key is for blah blah."
+            },
+            {
+              "Name": "name",
+              "Required": "Y",
+              "Type": "string",
+              "Default": "",
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "MethodName": "delete",
+          "HTTPMethod": "DELETE",
+          "URI": "/api/v1/internal/types/:type",
+          "parameters": [
+            {
+              "Name": "type",
+              "Required": "Y",
+              "Type": "string",
+              "Description": ""
+            }
+          ]
+        },
+        {
           "MethodName": "likes",
           "HTTPMethod": "GET",
           "URI": "/api/v1/internal/users/:mid/likes",
@@ -79,47 +120,6 @@
           ]
         },
         {
-          "MethodName": "delete",
-          "HTTPMethod": "DELETE",
-          "URI": "/api/v1/internal/types/:type",
-          "parameters": [
-            {
-              "Name": "type",
-              "Required": "Y",
-              "Type": "string",
-              "Description": ""
-            }
-          ]
-        },
-        {
-          "MethodName": "create",
-          "HTTPMethod": "POST",
-          "URI": "/api/v1/internal/types",
-          "parameters": [
-            {
-              "Name": "key",
-              "Required": "Y",
-              "Type": "long",
-              "Default": -1,
-              "Description": "This key is for blah blah."
-            },
-            {
-              "Name": "name",
-              "Required": "Y",
-              "Type": "string",
-              "Default": "",
-              "Description": ""
-            },
-            {
-              "Name": "age",
-              "Required": "N",
-              "Type": "int",
-              "Default": 0,
-              "Description": ""
-            }
-          ]
-        },
-        {
           "MethodName": "show",
           "HTTPMethod": "GET",
           "URI": "/api/v1/internal/users/:mid",
@@ -144,6 +144,13 @@
               "Description": ""
             },
             {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            },
+            {
               "Name": "key",
               "Required": "Y",
               "Type": "long",
@@ -155,13 +162,6 @@
               "Required": "Y",
               "Type": "string",
               "Default": "",
-              "Description": ""
-            },
-            {
-              "Name": "age",
-              "Required": "N",
-              "Type": "int",
-              "Default": 0,
               "Description": ""
             }
           ]

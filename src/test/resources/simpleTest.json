@@ -9,6 +9,13 @@
           "URI": "api/v1/user/create",
           "parameters": [
             {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            },
+            {
               "Name": "key",
               "Required": "Y",
               "Type": "long",
@@ -20,13 +27,6 @@
               "Required": "Y",
               "Type": "string",
               "Default": "",
-              "Description": ""
-            },
-            {
-              "Name": "age",
-              "Required": "N",
-              "Type": "int",
-              "Default": 0,
               "Description": ""
             },
             {

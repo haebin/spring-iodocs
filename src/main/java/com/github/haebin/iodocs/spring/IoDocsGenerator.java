@@ -1,5 +1,6 @@
 package com.github.haebin.iodocs.spring;
 
+import java.beans.Introspector;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.AnnotatedElement;
 import java.lang.reflect.Field;
@@ -67,12 +68,12 @@ public class IoDocsGenerator {
 			for (IoDocsMethod method : getIoDocsMethods(pathPrefix, endpoint, props)) {
 				methods.add(method.getData());
 			}
-			Collections.sort(methods, new NameComparator("MethodName"));
+			Collections.sort(methods, new MapComparator("MethodName"));
 			endpointMap.put("methods", methods);
 
 			endpointsJson.add(endpointMap);
 		}
-		Collections.sort(endpointsJson, new NameComparator("name"));
+		Collections.sort(endpointsJson, new MapComparator("name"));
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		return gson.toJson(json);
 	}
@@ -148,12 +149,17 @@ public class IoDocsGenerator {
 		return vars;
 	}
 	
-	public static List<Field> getAllFields(List<Field> fields, Class<?> type) {
-	    if (type.getSuperclass() != null) {
-	    	fields = getAllFields(fields, type.getSuperclass());
+	public static Field getField(Class<?> type, String name) {
+		Field field = null;
+		try {
+			field = type.getDeclaredField(name);
+		} catch (Exception e) {
+			;
+		}
+		if(field == null) {
+	    	field = getField(type.getSuperclass(), name);
 	    }
-	    fields.addAll(Arrays.asList(type.getDeclaredFields()));
-	    return fields;
+	    return field;
 	}
 	
 	public List<IoDocsParameter> processParameters(Method method) {
@@ -208,20 +214,43 @@ public class IoDocsGenerator {
 				
 				parameters.add(processParam(name, typeClass.getSimpleName().toLowerCase(), defaultValue, required, typeClass));
 			} else {
-				List<Field> fields = new ArrayList<Field>();
-				getAllFields(fields, typeClass);
+				List<Method> publicMethods = Arrays.asList(typeClass.getMethods());
+				Collections.sort(publicMethods,new MethodNameComparator());
+				//getAllFields(publicMethods, typeClass);
 				
 				Object typeObject = null;
 				try {
 					typeObject = typeClass.newInstance();
-					for(Field field: fields) {
-						field.setAccessible(true);
-						Object defaultValue = field.get(typeObject);
+					
+					for(Method publicMethod: publicMethods) {
+						//field.setAccessible(true);
+						if(!publicMethod.getName().startsWith("get") && !publicMethod.getName().startsWith("is")) {
+							continue;
+						}
+						
+						if(publicMethod.getName().equals("getClass")) {
+							continue;
+						}
+						
+						if(publicMethod.getParameterTypes().length > 0) {
+							continue;
+						}
+						
+						Object defaultValue = publicMethod.invoke(typeObject);
 						if(defaultValue instanceof Boolean) {
 							defaultValue = defaultValue.toString();
 						}
-						parameters.add(processParam(field.getName(), field.getType().getSimpleName().toLowerCase(), 
-								defaultValue, false, field));
+						String name = "";
+						//publicMethod.getName()
+						if(publicMethod.getName().startsWith("get")) {
+							name = publicMethod.getName().replaceFirst("get", "");
+						} else {
+							name = publicMethod.getName().replaceFirst("is", "");
+						}
+						name = Introspector.decapitalize(name);
+						
+						parameters.add(processParam(name, publicMethod.getReturnType().getSimpleName().toLowerCase(), 
+								defaultValue, false, getField(typeClass,name)));
 					}
 				} catch (Exception e) {
 					throw new RuntimeException(e);
@@ -255,14 +284,20 @@ public class IoDocsGenerator {
 				type, required, defaultValue, enumeratedList, enumeratedDescription);
 	}
 	
-	class NameComparator implements Comparator<Map<String, Object>> {
+	class MapComparator implements Comparator<Map<String, Object>> {
 		private String key = "name"; 
-		public NameComparator(String key) {
+		public MapComparator(String key) {
 			this.key = key;
 		}
 		
 		public int compare(Map<String, Object> x, Map<String, Object> y) {
 			return ((String)x.get(key)).compareTo((String)y.get(key));
+		}
+	}
+	
+	class MethodNameComparator implements Comparator<Method> { 
+		public int compare(Method x, Method y) {
+			return ((String)x.getName()).compareTo((String)y.getName());
 		}
 	}
 }

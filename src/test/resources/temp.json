@@ -9,6 +9,13 @@
           "URI": "/user/create",
           "parameters": [
             {
+              "Name": "name",
+              "Required": "Y",
+              "Type": "string",
+              "Default": "",
+              "Description": ""
+            },
+            {
               "Name": "age",
               "Required": "N",
               "Type": "int",
@@ -21,13 +28,6 @@
               "Type": "long",
               "Default": -1,
               "Description": "This key is for blah blah."
-            },
-            {
-              "Name": "name",
-              "Required": "Y",
-              "Type": "string",
-              "Default": "",
-              "Description": ""
             }
           ]
         }

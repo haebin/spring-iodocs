@@ -13,6 +13,7 @@ import org.junit.Test;
 import com.github.haebin.iodocs.mock.controller.FullController;
 import com.github.haebin.iodocs.mock.controller.ListParamController;
 import com.github.haebin.iodocs.mock.controller.NoParamController;
+import com.github.haebin.iodocs.mock.controller.NotUsedController;
 import com.github.haebin.iodocs.mock.controller.ParamWithBooleanController;
 import com.github.haebin.iodocs.mock.controller.RequestBodyController;
 import com.github.haebin.iodocs.mock.controller.SimpleController;
@@ -20,6 +21,15 @@ import com.github.haebin.iodocs.mock.controller.SomeController;
 import com.github.haebin.iodocs.mock.controller.ThatController;
 
 public class SpringIoDocsTest {
+	@Test
+	public void notUsedParameterTest() {
+		Class<?>[] clazzes = new Class<?>[]{NotUsedController.class};
+		String json = new IoDocsGenerator().generateIoDocs(clazzes);
+		//String file = loadClasspathResourceAsString("requestBodyTest.json");
+		System.out.println(json);
+		//Assert.assertEquals(json, file);
+	}
+	
 	@Test
 	public void requetBodyControllerTest() {
 		Class<?>[] clazzes = new Class<?>[]{RequestBodyController.class};
