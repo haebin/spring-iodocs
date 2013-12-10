@@ -3,12 +3,14 @@ package com.github.haebin.iodocs.spring;
 import static org.junit.Assert.fail;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.junit.Assert;
 import org.junit.Test;
 
+import com.github.haebin.iodocs.mock.controller.FullController;
 import com.github.haebin.iodocs.mock.controller.NoParamController;
 import com.github.haebin.iodocs.mock.controller.ParamWithBooleanController;
 import com.github.haebin.iodocs.mock.controller.SimpleController;
@@ -16,14 +18,22 @@ import com.github.haebin.iodocs.mock.controller.SomeController;
 import com.github.haebin.iodocs.mock.controller.ThatController;
 
 public class SpringIoDocsTest {
+	@Test
+	public void fullControllerTest() {
+		Class<?>[] clazzes = new Class<?>[]{FullController.class};
+		String json = new IoDocsGenerator().generateIoDocs(clazzes);
+		String file = loadClasspathResourceAsString("fullTest.json");
+		System.out.println(json);
+		Assert.assertEquals(json, file);
+	}
 	
 	@Test
 	public void noParamTest() {
 		Class<?>[] clazzes = new Class<?>[]{NoParamController.class};
 		String json = new IoDocsGenerator().generateIoDocs(clazzes);
-		//String file = loadClasspathResourceAsString("noParamTest.json");
+		String file = loadClasspathResourceAsString("noParamTest.json");
 		System.out.println(json);
-		//Assert.assertEquals(json, file);
+		Assert.assertEquals(json, file);
 	}
 	
 	@Test
@@ -70,6 +80,33 @@ public class SpringIoDocsTest {
 			fail("Could not load resource from classpath '" + filename + "': " + e.getMessage());
 			return "";
 		}
+	}
+	
+	@Test
+	public void regexTest() throws Exception {
+		//String path = "/users/{mid}";
+		//String path = "/{mid}";
+		IoDocsGenerator gen = new IoDocsGenerator();
+		
+		String path = "/users/{mid}/{test}";
+		List<String> vars = gen.parsePathVariables(path);
+		Assert.assertEquals(vars.size(), 2);
+		
+		path = "{mid}/{test}";
+		vars = gen.parsePathVariables(path);
+		Assert.assertEquals(vars.size(), 2);
+		
+		path = "/";
+		vars = gen.parsePathVariables(path);
+		Assert.assertEquals(vars.size(), 0);
+		
+		path = "{mid}";
+		vars = gen.parsePathVariables(path);
+		Assert.assertEquals(vars.size(), 1);
+		
+		path = "/{mid}";
+		vars = gen.parsePathVariables(path);
+		Assert.assertEquals(vars.size(), 1);
 	}
 	
 }

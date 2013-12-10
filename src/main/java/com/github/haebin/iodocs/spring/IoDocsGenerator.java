@@ -15,10 +15,14 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang.StringUtils;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.haebin.iodocs.annotation.IoDocsDescription;
 import com.github.haebin.iodocs.annotation.IoDocsIgnore;
@@ -80,23 +84,10 @@ public class IoDocsGenerator {
 				continue;
 			}
 			
+			String httpMethod = "GET";
 			String methodName = method.getName();
 			String synopsis = null;
-			String httpMethod = "GET";
 			String uri = null;
-			
-			Annotation[][] annotatesMap = method.getParameterAnnotations();
-			for(Annotation[] annotates: annotatesMap) {
-				for(Annotation annotate: annotates) {
-					if (annotate.annotationType().equals(RequestBody.class)) {
-						httpMethod = "POST";
-						break;
-					}
-				}
-				if(!httpMethod.equals("GET")) {
-					break;
-				}
-			}
 			
 			for (Annotation annotation : method.getAnnotations()) {
 				if (annotation.annotationType().equals(IoDocsName.class)) {
@@ -105,8 +96,18 @@ public class IoDocsGenerator {
 					synopsis = ((IoDocsDescription) annotation).value();
 				} else if (annotation.annotationType().equals(RequestMapping.class)) {
 					RequestMapping rm = (RequestMapping)annotation;
+					RequestMethod[] httpMethods = rm.method();
+					if(httpMethods != null && httpMethods.length > 0) {
+						httpMethod = httpMethods[0].toString();
+					}
+					
 					Object ext = (props == null? null:props.get("extension"));
-					uri = pathPrefix + (rm).value()[0] + (ext == null ? "":ext.toString());
+					String path = rm.value()[0];
+					List<String> pathVars = parsePathVariables(path);
+					for(String pathVar: pathVars) {
+						path = path.replaceFirst("\\{" + pathVar + "\\}", ":" + pathVar);
+					}
+					uri = pathPrefix + path + (ext == null ? "":ext.toString());
 				}
 			}
 			
@@ -115,6 +116,21 @@ public class IoDocsGenerator {
 			
 		}
 		return methods;
+	}
+	
+	public List<String> parsePathVariables(String path) {
+		String[] tokens = path.split("/");
+		List<String> vars = new ArrayList<String>();
+		for(String token: tokens) {
+			if(StringUtils.isEmpty(token)) {
+				continue;
+			}
+			
+			if(token.startsWith("{")) {
+				vars.add(token.substring(1, token.length()-1));
+			}
+		}	
+		return vars;
 	}
 	
 	public static List<Field> getAllFields(List<Field> fields, Class<?> type) {
@@ -143,22 +159,33 @@ public class IoDocsGenerator {
 			}
 			
 			Class<?> typeClass = method.getParameterTypes()[paramIndex];
-			if(typeClass.equals(BindingResult.class) || typeClass.equals(HttpServletRequest.class)) {
+			if(typeClass.equals(BindingResult.class) || typeClass.equals(HttpServletRequest.class) || typeClass.equals(HttpMethod.class)) {
 				// Since these are at the end, after these types, no need to check it.
 				continue;
 			}
 			
-			if(Primitives.isPrimitive(typeClass) || typeClass.getSimpleName().equals("String")) {
+			if(Primitives.isPrimitive(typeClass) || Primitives.isWrapperType(typeClass) || typeClass.equals(String.class)) {
+				Object defaultValue = null;
+				boolean required = false;
 				String name = "PLEASE_GIVE_PARAMETER_#" + (paramIndex+1) + "_A_NAME_WITH_@IoDocsName";
 				for(Annotation annotation: parameterAnnotations) {
 					if(annotation.annotationType().equals(IoDocsName.class)) {
 						name = ((IoDocsName)annotation).value();
 						break;
-					}
+					} else if(annotation.annotationType().equals(PathVariable.class)) {
+						name = ((PathVariable)annotation).value();
+						required = true;
+						break;
+					} else if(annotation.annotationType().equals(RequestParam.class)) {
+						name = ((RequestParam)annotation).value();
+						// somehow, this unseeable chars cause trouble. so, replace it with "".
+						defaultValue = ((RequestParam)annotation).defaultValue().trim().replaceAll("", "").replaceAll("", "").replaceAll("", "");
+						required = ((RequestParam)annotation).required();
+						break;
+					}  
 				}
 				
-				Object defaultValue = null;
-				parameters.add(processParam(name, typeClass.getSimpleName().toLowerCase(), defaultValue, typeClass));
+				parameters.add(processParam(name, typeClass.getSimpleName().toLowerCase(), defaultValue, required, typeClass));
 			} else {
 				List<Field> fields = new ArrayList<Field>();
 				getAllFields(fields, typeClass);
@@ -173,7 +200,7 @@ public class IoDocsGenerator {
 							defaultValue = defaultValue.toString();
 						}
 						parameters.add(processParam(field.getName(), field.getType().getSimpleName().toLowerCase(), 
-								defaultValue, field));
+								defaultValue, false, field));
 					}
 				} catch (Exception e) {
 					throw new RuntimeException(e);
@@ -183,9 +210,8 @@ public class IoDocsGenerator {
 		return parameters;
 	}
 	
-	private IoDocsParameter processParam(String name, String type, Object defaultValue,  
+	private IoDocsParameter processParam(String name, String type, Object defaultValue, boolean required, 
 			AnnotatedElement field) {
-		boolean required = false;
 		String description = "";
 		
 		Location location = null;

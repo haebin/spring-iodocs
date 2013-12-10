@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.haebin</groupId>
 	<artifactId>spring-iodocs</artifactId>
-	<version>0.1.1</version>
+	<version>0.1.2</version>
 	<packaging>jar</packaging>
 	<name>Spring Mashery I/O Docs Support</name>
 	<description>Allows the generation of I/O Docs based on Spring annotations</description>

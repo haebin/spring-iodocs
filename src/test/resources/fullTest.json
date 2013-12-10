@@ -1,0 +1,172 @@
+{
+  "endpoints": [
+    {
+      "name": "FullController",
+      "methods": [
+        {
+          "MethodName": "likes",
+          "HTTPMethod": "GET",
+          "URI": "/api/v1/internal/users/:mid/likes",
+          "parameters": [
+            {
+              "Name": "mid",
+              "Required": "Y",
+              "Type": "string",
+              "Description": ""
+            },
+            {
+              "Name": "type",
+              "Required": "N",
+              "Type": "string",
+              "Default": "ALL",
+              "Description": ""
+            },
+            {
+              "Name": "limit",
+              "Required": "N",
+              "Type": "int",
+              "Default": "10",
+              "Description": ""
+            },
+            {
+              "Name": "includeLikeCount",
+              "Required": "N",
+              "Type": "boolean",
+              "Default": "false",
+              "Description": ""
+            },
+            {
+              "Name": "maxTimestamp",
+              "Required": "N",
+              "Type": "long",
+              "Default": "",
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "MethodName": "recommends",
+          "HTTPMethod": "GET",
+          "URI": "/api/v1/internal/users/:mid/recommends",
+          "parameters": [
+            {
+              "Name": "mid",
+              "Required": "Y",
+              "Type": "string",
+              "Description": ""
+            },
+            {
+              "Name": "type",
+              "Required": "N",
+              "Type": "string",
+              "Default": "ALL",
+              "Description": ""
+            },
+            {
+              "Name": "inDays",
+              "Required": "N",
+              "Type": "int",
+              "Default": "0",
+              "Description": ""
+            },
+            {
+              "Name": "limit",
+              "Required": "N",
+              "Type": "int",
+              "Default": "5",
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "MethodName": "delete",
+          "HTTPMethod": "DELETE",
+          "URI": "/api/v1/internal/types/:type",
+          "parameters": [
+            {
+              "Name": "type",
+              "Required": "Y",
+              "Type": "string",
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "MethodName": "create",
+          "HTTPMethod": "POST",
+          "URI": "/api/v1/internal/types",
+          "parameters": [
+            {
+              "Name": "key",
+              "Required": "Y",
+              "Type": "long",
+              "Default": -1,
+              "Description": "This key is for blah blah."
+            },
+            {
+              "Name": "name",
+              "Required": "Y",
+              "Type": "string",
+              "Default": "",
+              "Description": ""
+            },
+            {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "MethodName": "show",
+          "HTTPMethod": "GET",
+          "URI": "/api/v1/internal/users/:mid",
+          "parameters": [
+            {
+              "Name": "mid",
+              "Required": "Y",
+              "Type": "string",
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "MethodName": "update",
+          "HTTPMethod": "PUT",
+          "URI": "/api/v1/internal/users/:mid",
+          "parameters": [
+            {
+              "Name": "mid",
+              "Required": "Y",
+              "Type": "string",
+              "Description": ""
+            },
+            {
+              "Name": "key",
+              "Required": "Y",
+              "Type": "long",
+              "Default": -1,
+              "Description": "This key is for blah blah."
+            },
+            {
+              "Name": "name",
+              "Required": "Y",
+              "Type": "string",
+              "Default": "",
+              "Description": ""
+            },
+            {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

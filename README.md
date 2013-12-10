@@ -50,5 +50,5 @@ new IoDocsGenerator().generateIoDocs(
 ```
 
 # Features
+Refer test cases for supported features.
 
-* For now, only supports Spring based GET APIs only.
