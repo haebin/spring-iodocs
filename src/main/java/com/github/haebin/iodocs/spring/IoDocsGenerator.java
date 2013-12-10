@@ -67,7 +67,7 @@ public class IoDocsGenerator {
 			for (IoDocsMethod method : getIoDocsMethods(pathPrefix, endpoint, props)) {
 				methods.add(method.getData());
 			}
-			Collections.sort(endpointsJson, new NameComparator("MethodName"));
+			Collections.sort(methods, new NameComparator("MethodName"));
 			endpointMap.put("methods", methods);
 
 			endpointsJson.add(endpointMap);
