@@ -1,0 +1,37 @@
+{
+  "endpoints": [
+    {
+      "name": "RequestBodyController",
+      "methods": [
+        {
+          "MethodName": "createUser",
+          "HTTPMethod": "POST",
+          "URI": "/user/create",
+          "parameters": [
+            {
+              "Name": "key",
+              "Required": "Y",
+              "Type": "long",
+              "Default": -1,
+              "Description": "This key is for blah blah."
+            },
+            {
+              "Name": "name",
+              "Required": "Y",
+              "Type": "string",
+              "Default": "",
+              "Description": ""
+            },
+            {
+              "Name": "age",
+              "Required": "N",
+              "Type": "int",
+              "Default": 0,
+              "Description": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

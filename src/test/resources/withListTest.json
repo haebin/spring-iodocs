@@ -1,0 +1,85 @@
+{
+  "endpoints": [
+    {
+      "name": "ListParamController",
+      "methods": [
+        {
+          "MethodName": "addRegion",
+          "HTTPMethod": "POST",
+          "URI": "/objects/:oid/regions",
+          "parameters": [
+            {
+              "Name": "oid",
+              "Required": "Y",
+              "Type": "string",
+              "Description": ""
+            },
+            {
+              "Name": "PLEASE_GIVE_PARAMETER_#2_A_NAME_WITH_@IoDocsName",
+              "Required": "N",
+              "Type": "list",
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "MethodName": "addRegion1",
+          "HTTPMethod": "POST",
+          "URI": "/objects/:oid/regions",
+          "parameters": [
+            {
+              "Name": "oid",
+              "Required": "Y",
+              "Type": "string",
+              "Description": ""
+            },
+            {
+              "Name": "list",
+              "Required": "N",
+              "Type": "list",
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "MethodName": "addRegionWithIoDocs",
+          "HTTPMethod": "POST",
+          "URI": "/objects/:oid/regions",
+          "parameters": [
+            {
+              "Name": "oid",
+              "Required": "Y",
+              "Type": "string",
+              "Description": ""
+            },
+            {
+              "Name": "",
+              "Required": "Y",
+              "Type": "list",
+              "Description": ""
+            }
+          ]
+        },
+        {
+          "MethodName": "addRegionWithIoDocs1",
+          "HTTPMethod": "POST",
+          "URI": "/objects/:oid/regions",
+          "parameters": [
+            {
+              "Name": "oid",
+              "Required": "Y",
+              "Type": "string",
+              "Description": ""
+            },
+            {
+              "Name": "REQUEST_BODY",
+              "Required": "N",
+              "Type": "list",
+              "Description": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

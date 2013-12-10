@@ -20,9 +20,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ValueConstants;
 
 import com.github.haebin.iodocs.annotation.IoDocsDescription;
 import com.github.haebin.iodocs.annotation.IoDocsIgnore;
@@ -85,6 +87,19 @@ public class IoDocsGenerator {
 			}
 			
 			String httpMethod = "GET";
+			Annotation[][] annotatesMap = method.getParameterAnnotations();
+			for(Annotation[] annotates: annotatesMap) {
+				for(Annotation annotate: annotates) {
+					if (annotate.annotationType().equals(RequestBody.class)) {
+						httpMethod = "POST";
+						break;
+					}
+				}
+				if(!httpMethod.equals("GET")) {
+					break;
+				}
+			}
+			
 			String methodName = method.getName();
 			String synopsis = null;
 			String uri = null;
@@ -164,13 +179,15 @@ public class IoDocsGenerator {
 				continue;
 			}
 			
-			if(Primitives.isPrimitive(typeClass) || Primitives.isWrapperType(typeClass) || typeClass.equals(String.class)) {
+			if(Primitives.isPrimitive(typeClass) || Primitives.isWrapperType(typeClass) || typeClass.equals(String.class)
+				|| typeClass.equals(List.class)	) {
 				Object defaultValue = null;
 				boolean required = false;
 				String name = "PLEASE_GIVE_PARAMETER_#" + (paramIndex+1) + "_A_NAME_WITH_@IoDocsName";
 				for(Annotation annotation: parameterAnnotations) {
 					if(annotation.annotationType().equals(IoDocsName.class)) {
 						name = ((IoDocsName)annotation).value();
+						required = ((IoDocsName)annotation).required();
 						break;
 					} else if(annotation.annotationType().equals(PathVariable.class)) {
 						name = ((PathVariable)annotation).value();
@@ -178,11 +195,15 @@ public class IoDocsGenerator {
 						break;
 					} else if(annotation.annotationType().equals(RequestParam.class)) {
 						name = ((RequestParam)annotation).value();
-						// somehow, this unseeable chars cause trouble. so, replace it with "".
-						defaultValue = ((RequestParam)annotation).defaultValue().trim().replaceAll("", "").replaceAll("", "").replaceAll("", "");
+						defaultValue = ((RequestParam)annotation).defaultValue();
+						if(defaultValue.equals(ValueConstants.DEFAULT_NONE)) {
+							defaultValue = "";
+						}
 						required = ((RequestParam)annotation).required();
 						break;
-					}  
+					} else if(annotation.annotationType().equals(RequestBody.class)) {
+						
+					}
 				}
 				
 				parameters.add(processParam(name, typeClass.getSimpleName().toLowerCase(), defaultValue, required, typeClass));
